@@ -134,7 +134,7 @@ class RoomsManagement():
             with open ("schedule.txt", 'r') as s:
                 lines = s.readlines()
                 if lines == "":
-                    return False # retornar nehum registro realizado
+                    return resp # retornar nehum registro realizado
                 for line in lines:
                     if line.replace(" ", "") != "":
                         line2 = json.loads(line)
