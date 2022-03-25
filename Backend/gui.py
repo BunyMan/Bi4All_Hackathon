@@ -32,7 +32,7 @@ class gui():
         
         self.text0 = StringVar(mainframe)
         self.text0.set('Choices')
-        self.rooms = ['Smart (3 pessoas)', 'Standar (6 pessoas)', 'Super (8 pessoas)', 'Sala de Ioga', 'Auditório', 'Padel']
+        self.rooms = ['Smart (3 pessoas)', 'Standar (6 pessoas)', 'Super (8 pessoas)', 'Ioga', 'Auditorium', 'Padel', 'Gim']
         self.ed = ttk.OptionMenu(mainframe, self.text0, *self.rooms)
 
         self.ed1 = ttk.Button(mainframe, text="Seleciona Aqui!", command=self.calendar_page)
@@ -59,9 +59,9 @@ class gui():
         self.ed2.grid(row=3, column=1, sticky=W, padx=5)
         self.ed3.grid(row=4, column=1, sticky=W, padx=5)
 
-        def exit():
-            self.e1.show_available()
-            #root.quit()
+        # def exit():
+        #     self.e1.show_available()
+        #     #root.quit()
 
         self.space_start = ttk.Label(mainframe, text="")
         self.space_start.grid(row=0, column=0)
@@ -108,9 +108,27 @@ class gui():
         self.tablerequiresdate.rowconfigure(0, weight=1)
         self.tablerequiresdate.resizable(0, 0)
         self.tablerequiresdate.attributes("-topmost", True)
+        
+        self.header1 = ttk.Label(self.tablerequiresdate, text="Sala")
+        self.header1.grid(row=0, column=0, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [Start]")
+        self.header1.grid(row=0, column=1, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [End]")
+        self.header1.grid(row=0, column=2, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID")
+        self.header1.grid(row=0, column=3, pady=10, padx=10)
 
-    #def table_information(self)
-    #    my_table = ttk.Treeview(game_frame)
+        j = 1
+        for line in self.array_data:
+            self.selectedroom = ttk.Label(self.tablerequiresdate, text=line[0])
+            self.selectedroom.grid(row=j, column=0, pady=3, padx=10)
+            self.hour_start = ttk.Label(self.tablerequiresdate, text=line[2])
+            self.hour_start.grid(row=j, column=1, pady=3, padx=10)
+            self.hour_end = ttk.Label(self.tablerequiresdate, text=line[3])
+            self.hour_end.grid(row=j, column=2, pady=3, padx=10)
+            self.user_id = ttk.Label(self.tablerequiresdate, text=line[4])
+            self.user_id.grid(row=j, column=3, pady=3, padx=10)
+            j += 1
 
     def see_requires(self):
         self.seerequires = Toplevel(root)
@@ -128,8 +146,12 @@ class gui():
 
     def getting_date(self):
         self.data_info = self.see_date.get_date()
-        self.table_requires_date()
-        self.seerequires.destroy()
+        self.array_data = self.e1.check_schedules_data(self.data_info)
+        if self.array_data == []:
+            print("Error")
+        else:
+            self.table_requires_date()
+            self.seerequires.destroy()
 
     def help_gui(self):
         self.helpmenu = Toplevel(root)
@@ -166,29 +188,36 @@ class gui():
         self.msg_hora_fim_help.grid(row=3, column=1, pady=10, sticky=(W))
 
     def require_denied(self):
-        self.requiredenied = Toplevel(root)
-        self.requiredenied.title("Require Denied!")
-        self.requiredeniedframe = ttk.Frame(self.requiredenied, padding="3 3 12 12")
-        self.requiredeniedframe.grid(column=0, row=0, sticky=(N, W, E, S))
-        self.requiredenied.columnconfigure(0, weight=1)
-        self.requiredenied.rowconfigure(0, weight=1)
-        self.requiredenied.attributes("-topmost", True)
-        self.require_denied_msg = ttk.Label(self.requiredenied, text="Require Denied!")
-        self.require_denied_msg.grid(row=0, column=0, pady=10)
-        self.require_denied_tryagain = ttk.Label(self.requiredenied, text="try Again")
-        self.require_denied_tryagain.grid(row=2, column=0, pady=10, padx=10)
-        self.requiredenied.resizable(0, 0)
+        self.tablerequiresdate = Toplevel(root)
+        self.tablerequiresdate.title("" + self.data_info)
+        self.tablerequiresdate_frame = ttk.Frame(self.tablerequiresdate, padding="3 3 12 12")
+        self.tablerequiresdate_frame.grid(column=0, row=0, sticky=(N, W, E, S))
+        self.tablerequiresdate.columnconfigure(0, weight=1)
+        self.tablerequiresdate.rowconfigure(0, weight=1)
+        self.tablerequiresdate.resizable(0, 0)
+        self.tablerequiresdate.attributes("-topmost", True)
+        self.topmsg = ttk.Label(self.tablerequiresdate, text="Marcação Não Realizada! Horários Reservados:")
+        self.topmsg.grid(row=0, column=0, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="Sala")
+        self.header1.grid(row=1, column=0, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [Start]")
+        self.header1.grid(row=1, column=1, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [End]")
+        self.header1.grid(row=1, column=2, pady=10, padx=10)
+        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID")
+        self.header1.grid(row=1, column=3, pady=10, padx=10)
+        j = 2
+        for line in self.array_data:
+            self.selectedroom = ttk.Label(self.tablerequiresdate, text=line[0])
+            self.selectedroom.grid(row=j, column=0, pady=3, padx=10)
+            self.hour_start = ttk.Label(self.tablerequiresdate, text=line[2])
+            self.hour_start.grid(row=j, column=1, pady=3, padx=10)
+            self.hour_end = ttk.Label(self.tablerequiresdate, text=line[3])
+            self.hour_end.grid(row=j, column=2, pady=3, padx=10)
+            self.user_id = ttk.Label(self.tablerequiresdate, text=line[4])
+            self.user_id.grid(row=j, column=3, pady=3, padx=10)
+            j += 1
        
-        
-        ############################# Linha incluída por Guilherme
-        output = self.e1.check_schedules_data(self.date)
-        print(output)
-        #if output == False:
-           # self.require_denied_tryagain.configure(text="Nenhum Registro Encontrado")
-        #else:
-            #self.require_denied_tryagain = ttk.Label(self.requiredenied, text=output)
-        #self.require_denied_tryagain.grid(row=3, column=0, pady=10, padx=10)
-        ##########################################
         
     def require_accepted(self):
         self.requireaccepted = Toplevel(root)
