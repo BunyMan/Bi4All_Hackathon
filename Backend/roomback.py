@@ -132,17 +132,13 @@ class RoomsManagement():
         resp = []
         try:
             with open ("schedule.txt", 'r') as s:
-                print("cheguei 1")
                 lines = s.readlines()
                 if lines == "":
                     return False # retornar nehum registro realizado
                 for line in lines:
-                    print("cheguei 2")
                     if line.replace(" ", "") != "":
                         line2 = json.loads(line)
-                        print("cheguei 3")
                         if line2[1] == data:
-                            print("cheguei 4")
                             resp.append(line2)
                         else:
                             pass
