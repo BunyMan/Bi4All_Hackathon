@@ -41,12 +41,12 @@ class gui():
         
         self.text2 = StringVar(mainframe)
         self.text2.set('Horas')
-        self.rooms2 = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '13:00', '14:00', '15:00', '16:00', '17:30', '18:00', '19:30', '20:00', '21:00'  ]
+        self.rooms2 = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00','12:30', '13:00','13:30', '14:00','14:30', '15:00','15:30', '16:00 ','16:30','17:00', '17:30', '18:00','18:30','19:00', '19:30', '20:00','20:30', '21:00'  ]
         self.ed2 = ttk.OptionMenu(mainframe, self.text2, *self.rooms2)
         
         self.text3 = StringVar(mainframe)
         self.text3.set('Horas')
-        self.rooms3 = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '13:00', '14:00', '15:00', '16:00', '17:30', '18:00', '19:30', '20:00', '21:00'  ]
+        self.rooms3 = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00','12:30', '13:00','13:30', '14:00','14:30', '15:00','15:30', '16:00 ','16:30','17:00', '17:30', '18:00','18:30','19:00', '19:30', '20:00','20:30', '21:00'  ] 
         self.ed3 = ttk.OptionMenu(mainframe, self.text3, *self.rooms3)
         
         self.led.grid(row=1, column=0, sticky=W)
@@ -115,7 +115,7 @@ class gui():
         self.header1.grid(row=0, column=1, pady=10, padx=10)
         self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [End]")
         self.header1.grid(row=0, column=2, pady=10, padx=10)
-        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID")
+        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID 🪪")
         self.header1.grid(row=0, column=3, pady=10, padx=10)
 
         j = 1
@@ -132,7 +132,7 @@ class gui():
 
     def see_requires(self):
         self.seerequires = Toplevel(root)
-        self.seerequires.title("Selecione a Data")
+        self.seerequires.title("Selecione a Data 📆")
         self.seerequires_frame = ttk.Frame(self.seerequires, padding="3 3 12 12")
         self.seerequires_frame.grid(column=0, row=0, sticky=(N, W, E, S))
         self.seerequires.columnconfigure(0, weight=1)
@@ -141,21 +141,18 @@ class gui():
         self.seerequires.attributes("-topmost", True)
         self.see_date = Calendar(self.seerequires, selectmode = 'day')
         self.see_date.grid(row=0,column=0)
-        confirm_to_see = ttk.Button(self.seerequires, text="Confirmar", command=self.getting_date)
+        confirm_to_see = ttk.Button(self.seerequires, text="Confirmar 👍", command=self.getting_date)
         confirm_to_see.grid(row=1, column=0, pady=10)
 
     def getting_date(self):
         self.data_info = self.see_date.get_date()
         self.array_data = self.e1.check_schedules_data(self.data_info)
-        if self.array_data == []:
-            print("Error")
-        else:
-            self.table_requires_date()
-            self.seerequires.destroy()
+        self.table_requires_date()
+        self.seerequires.destroy()
 
     def help_gui(self):
         self.helpmenu = Toplevel(root)
-        self.helpmenu.title("Ajuda")
+        self.helpmenu.title("Ajuda 🆘")
         self.helpmenu_frame = ttk.Frame(self.helpmenu, padding="3 3 12 12")
         self.helpmenu_frame.grid(column=0, row=0, sticky=(N, W, E, S))
         self.helpmenu.columnconfigure(0, weight=1)
@@ -188,36 +185,18 @@ class gui():
         self.msg_hora_fim_help.grid(row=3, column=1, pady=10, sticky=(W))
 
     def require_denied(self):
-        self.tablerequiresdate = Toplevel(root)
-        self.tablerequiresdate.title("" + self.data_info)
-        self.tablerequiresdate_frame = ttk.Frame(self.tablerequiresdate, padding="3 3 12 12")
-        self.tablerequiresdate_frame.grid(column=0, row=0, sticky=(N, W, E, S))
-        self.tablerequiresdate.columnconfigure(0, weight=1)
-        self.tablerequiresdate.rowconfigure(0, weight=1)
-        self.tablerequiresdate.resizable(0, 0)
-        self.tablerequiresdate.attributes("-topmost", True)
-        self.topmsg = ttk.Label(self.tablerequiresdate, text="Marcação Não Realizada! Horários Reservados:")
-        self.topmsg.grid(row=0, column=0, pady=10, padx=10)
-        self.header1 = ttk.Label(self.tablerequiresdate, text="Sala")
-        self.header1.grid(row=1, column=0, pady=10, padx=10)
-        self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [Start]")
-        self.header1.grid(row=1, column=1, pady=10, padx=10)
-        self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [End]")
-        self.header1.grid(row=1, column=2, pady=10, padx=10)
-        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID")
-        self.header1.grid(row=1, column=3, pady=10, padx=10)
-        j = 2
-        for line in self.array_data:
-            self.selectedroom = ttk.Label(self.tablerequiresdate, text=line[0])
-            self.selectedroom.grid(row=j, column=0, pady=3, padx=10)
-            self.hour_start = ttk.Label(self.tablerequiresdate, text=line[2])
-            self.hour_start.grid(row=j, column=1, pady=3, padx=10)
-            self.hour_end = ttk.Label(self.tablerequiresdate, text=line[3])
-            self.hour_end.grid(row=j, column=2, pady=3, padx=10)
-            self.user_id = ttk.Label(self.tablerequiresdate, text=line[4])
-            self.user_id.grid(row=j, column=3, pady=3, padx=10)
-            j += 1
-       
+        self.requiredenied = Toplevel(root)
+        self.requiredenied.title("Pedido Negado! ❌")
+        self.requiredeniedframe = ttk.Frame(self.requiredenied, padding="3 3 12 12")
+        self.requiredeniedframe.grid(column=0, row=0, sticky=(N, W, E, S))
+        self.requiredenied.columnconfigure(0, weight=1)
+        self.requiredenied.rowconfigure(0, weight=1)
+        self.requiredenied.attributes("-topmost", True)
+        self.require_denied_msg = ttk.Label(self.requiredenied, text="Horário indisponível para a reserva! ")
+        self.require_denied_msg.grid(row=0, column=0, pady=10, padx=5)
+        self.require_denied_tryagain = ttk.Label(self.requiredenied, text="Consulte: Ver Reservas ")
+        self.require_denied_tryagain.grid(row=2, column=0, pady=10, padx=10)
+        self.requiredenied.resizable(0, 0)
         
     def require_accepted(self):
         self.requireaccepted = Toplevel(root)
@@ -228,7 +207,7 @@ class gui():
         self.requireaccepted.rowconfigure(0, weight=1)
         self.requireaccepted.resizable(0, 0)
         self.requireaccepted.attributes("-topmost", True)
-        self.require_accepted_msg = ttk.Label(self.requireaccepted, text="Require Accepeted!")
+        self.require_accepted_msg = ttk.Label(self.requireaccepted, text="Pedido Aceite!")
         #self.require_accepted_msg.grid(row=0, column=0, pady=10, sticky=(W, E))
 
         self.require_accepted_room = ttk.Label(self.requireaccepted, text="Sala:", font=(20))
@@ -251,9 +230,9 @@ class gui():
         self.require_accepted_endh_info = ttk.Label(self.requireaccepted, text="" + self.time_end, font=(20))
         self.require_accepted_endh_info.grid(row=4, column=1, padx=5, sticky=(W))
 
-        self.confirm_button = ttk.Button(self.requireaccepted, text="Confirmar", command=self.close_confirm)
+        self.confirm_button = ttk.Button(self.requireaccepted, text="Confirmar 👍", command=self.close_confirm)
         self.confirm_button.grid(row=5, column=1, pady=10)
-        self.cancel_button = ttk.Button(self.requireaccepted, text="Cancelar", command=self.close_confirm)
+        self.cancel_button = ttk.Button(self.requireaccepted, text="Cancelar 👎", command=self.close_confirm)
         self.cancel_button.grid(row=5, column=0, pady=10)
     
     def close_confirm(self):
@@ -271,7 +250,7 @@ class gui():
         self.calendarpage.attributes("-topmost", True)
         self.cal = Calendar(self.calendarpage, selectmode = 'day')
         self.cal.grid(row=0,column=0)
-        confirm_date = ttk.Button(self.calendarpage, text="Confirmar", command=self.grad_date)
+        confirm_date = ttk.Button(self.calendarpage, text="Confirmar 👍", command=self.grad_date)
         confirm_date.grid(row=1, column=0, pady=10)
     
     def grad_date(self):

@@ -37,7 +37,7 @@ class RoomsManagement():
                         line2 = json.loads(line)
                         print(line2)
                 s.close()
-            os.chdir("..")
+            #os.chdir("..")
         except Exception as e:
             print(e)
             #with open("rooms", 'w') as f:
@@ -56,7 +56,7 @@ class RoomsManagement():
             check = self.check_schedule_conflict(room, date, time_init, time_end)
             if check == False:
                 print("Não é possível registrar")
-                os.chdir("..")
+                #os.chdir("..")
                 return False
             else:
                 pass
@@ -68,31 +68,20 @@ class RoomsManagement():
             
     def check_schedule_conflict(self, room, date, time_init, time_end):
         try:
-            print("entrou no try")
             with open ("schedule.txt", 'r') as s:
-                print("abriu o ficheiro")
                 lines = s.readlines()
-                print("leu as linhas")
                 if lines == "":
-                    print("retornou True")
                     return True
                 for line in lines:
-                    print("nao retornou True e entrou no for")
                     if line.replace(" ", "") != "":
                         line2 = json.loads(line)
                         if line2[0] == room:
-                            print("entrou no json")
-                            print(line2[1])
-                            print(date)
-                            t_obj = datetime.strptime(line2[1], '%d/%m/%y')
-                            t_obj2 = datetime.strptime(date, '%d/%m/%y')
-                            if t_obj == t_obj2:
-                                print("invalid Imput!")
+                            date2 = line2[1]
+                            if (line2[2] >= time_init and line2[3] <= time_end) or (time_init >= time_end) :
+                                for i in range(4):
+                                    if date2[i] == date[i]:
+                                        pass
                                 return False
-                            else:
-                                return True
-                        else:
-                            pass
             return True
         except Exception as e:
             print(e)
@@ -110,22 +99,18 @@ class RoomsManagement():
             return a
 
     def check_schedules_data(self, data):
-        print("test")
         resp = []
         try:
-            #os.chdir("Backend")
             with open ("schedule.txt", 'r') as s:
                 lines = s.readlines()
                 if lines == "":
                     return resp # retornar nehum registro realizado
                 for line in lines:
-                    #if line.replace(" ", "") != "":
                     line2 = json.loads(line)
                     if line2[1] == data:
                         resp.append(line2)
                     else:
                         pass
-            #os.chdir("..")
             return resp
         except Exception as e:
             print(e)
