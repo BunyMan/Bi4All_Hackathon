@@ -32,7 +32,7 @@ class gui():
         
         self.text0 = StringVar(mainframe)
         self.text0.set('Choices')
-        self.rooms = ['Smart (3 pessoas)', 'Standar (6 pessoas)', 'Super (8 pessoas)', 'Ioga', 'Auditorium', 'Padel', 'Gim']
+        self.rooms = ['Smart (3 pessoas)', 'Standar (6 pessoas)', 'Super (8 pessoas)', 'Ioga', 'Auditorium', 'Padel', 'Gim', 'Sala 4']
         self.ed = ttk.OptionMenu(mainframe, self.text0, *self.rooms)
 
         self.ed1 = ttk.Button(mainframe, text="Seleciona Aqui!", command=self.calendar_page)
@@ -115,7 +115,7 @@ class gui():
         self.header1.grid(row=0, column=1, pady=10, padx=10)
         self.header1 = ttk.Label(self.tablerequiresdate, text="Hora [End]")
         self.header1.grid(row=0, column=2, pady=10, padx=10)
-        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID 🪪")
+        self.header1 = ttk.Label(self.tablerequiresdate, text="User ID")
         self.header1.grid(row=0, column=3, pady=10, padx=10)
 
         j = 1
